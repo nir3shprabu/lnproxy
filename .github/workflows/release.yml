@@ -1,4 +1,6 @@
-on: release
+on:
+  release:
+      types: [ published ]
 name: Build Release
 jobs:
   release-linux-amd64:
@@ -6,7 +8,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@main
     - name: compile and release
       uses: ngs/go-release.action@v1.0.1
       env:
