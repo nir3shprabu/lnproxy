@@ -23,21 +23,27 @@ jobs:
           go version 
           go get lnproxy
           go mod tidy
-          go build 
-          ls -la 
-  release:
-    name: Publish new release
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    env:
-      GO111MODULE: on
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-    steps:
-    - uses: actions/checkout@v5
-    - name: compile and release
-      uses: ngs/go-release.action@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: amd64
-        GOOS: linux
-        EXTRA_FILES: "LICENSE"
+          ls -la
+          
+      - name: Release Binaries
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          version: latest
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}} 
+  # release:
+  #   name: Publish new release
+  #   if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     GO111MODULE: on
+  #     ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  #   steps:
+  #   - uses: actions/checkout@main
+  #   - name: compile and release
+  #     uses: ngs/go-release.action@v1.0.1
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       GOARCH: amd64
+  #       GOOS: linux
+  #       EXTRA_FILES: "LICENSE"
