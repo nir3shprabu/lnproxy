@@ -31,3 +31,4 @@ jobs:
           go version 
           go get lnproxy
           go build 
+          ls -la
