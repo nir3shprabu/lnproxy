@@ -26,6 +26,8 @@ jobs:
           go-version: stable
       - name: Install go.sum
         run: go get lnproxy 
+      - name: gcc executable file
+        run: apt-get install build-essential
       # More assembly might be required: Docker logins, GPG, etc. It all depends
       # on your needs.
       - uses: goreleaser/goreleaser-action@v4
