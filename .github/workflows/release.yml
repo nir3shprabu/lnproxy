@@ -1,50 +1,37 @@
-name: Push workflow
+name: goreleaser
 
-on: push
+on:
+  push:
+    # run only against tags
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+  # packages: write
+  # issues: write
 
 jobs:
-  build:
+  goreleaser:
     runs-on: ubuntu-latest
-    env:
-      GO111MODULE: on
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v3
-      - name: Unshallow
-        run: git fetch --prune --unshallow
-      - name: Set up Go
-        uses: actions/setup-go@v4
+      - uses: actions/checkout@v3
         with:
-          go-version: '1.19'
-
-      - name: Create binary
-        run: |
-          go version 
-          go get lnproxy
-          go mod tidy
-          ls -la
-
-      - name: Release Binaries
-        uses: goreleaser/goreleaser-action@v4
+          fetch-depth: 0
+      - run: git fetch --force --tags
+      - uses: actions/setup-go@v4
         with:
+          go-version: stable
+      # More assembly might be required: Docker logins, GPG, etc. It all depends
+      # on your needs.
+      - uses: goreleaser/goreleaser-action@v4
+        with:
+          # either 'goreleaser' (default) or 'goreleaser-pro':
+          distribution: goreleaser
           version: latest
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}} 
-  # release:
-  #   name: Publish new release
-  #   if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     GO111MODULE: on
-  #     ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-  #   steps:
-  #   - uses: actions/checkout@main
-  #   - name: compile and release
-  #     uses: ngs/go-release.action@v1.0.1
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       GOARCH: amd64
-  #       GOOS: linux
-  #       EXTRA_FILES: "LICENSE"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro'
+          # distribution:
+          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
