@@ -3,6 +3,7 @@ name: Build Release
 jobs:
   release-linux-amd64:
     name: release linux/amd64
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
