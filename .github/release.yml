@@ -2,9 +2,9 @@ name: Push workflow
 
 on:
   push:
-#     branches: [""]
-#   pull_request:
-#     branches: ["main"]
+    branches: ["gh-release-workflow"]
+  pull_request:
+    branches: ["gh-release-workflow"]
 
 jobs:
   build:
