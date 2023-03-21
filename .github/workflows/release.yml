@@ -21,8 +21,8 @@ jobs:
       - name: Create binary
         run: |
           go version 
-          go mod tidy
           go get lnproxy
+          go mod tidy
           go build 
           ls -la 
   release:
@@ -33,7 +33,7 @@ jobs:
       GO111MODULE: on
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
-    - uses: actions/checkout@main
+    - uses: actions/checkout@v5
     - name: compile and release
       uses: ngs/go-release.action@v1.0.1
       env:
