@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: stable
+      - name: Install go.sum
+        run: go get lnproxy 
       # More assembly might be required: Docker logins, GPG, etc. It all depends
       # on your needs.
       - uses: goreleaser/goreleaser-action@v4
@@ -29,6 +31,8 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release --snapshot --clean
+      - name: Generate release
+        uses: ngs/go-release.action@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro'
