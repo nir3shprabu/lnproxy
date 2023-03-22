@@ -28,7 +28,7 @@ jobs:
         run: |
           go version 
           go get lnproxy 
-          export cgo_enabled=0 go build
+          export CGO_ENABLED="0" go build
           go env
           ls -la 
       
