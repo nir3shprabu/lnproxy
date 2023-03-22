@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - gh-release-workflow
 
 permissions:
   contents: write
