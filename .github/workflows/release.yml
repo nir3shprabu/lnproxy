@@ -5,10 +5,11 @@ on:
     tags:
       - 'v*'
 
-# permissions:
-#   contents: write
-  # packages: write
-  # issues: write
+permissions:
+  contents: write
+  id-token: write
+  packages: write
+  issues: write
 
 jobs:
   goreleaser:
@@ -19,33 +20,21 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - uses: actions/checkout@v3
-      #   with:
-      #     fetch-depth: 0
-      # - run: git fetch --force --tags
+
+      - name: Unshallow
+        run: git fetch --prune --unshallow
       - uses: actions/setup-go@v4
         with:
           go-version: 1.19
-      # - name: build process
-      #   run: |
-      #     go version 
-      #     go get lnproxy 
-      #     go build
-      #     go env
-      #     ls -la 
+      - name: Install go packages lnproxy
+        run: |
+          go version 
+          go get lnproxy
       
-
-      # More assembly might be required: Docker logins, GPG, etc. It all depends
-      # on your needs.
       - uses: goreleaser/goreleaser-action@v4
         with:
-          # either 'goreleaser' (default) or 'goreleaser-pro':
           distribution: goreleaser
           version: latest
-          args: release --clean
-      # - name: Generate release
-      #   uses: ngs/go-release.action@v1.0.0
+          args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro'
-          # distribution:
-          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
