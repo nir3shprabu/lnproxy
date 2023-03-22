@@ -29,6 +29,7 @@ jobs:
           go version 
           go get lnproxy 
           go build
+          go env
           ls -la 
       
       # More assembly might be required: Docker logins, GPG, etc. It all depends
