@@ -20,17 +20,19 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - uses: actions/checkout@v3
-
+      
       - name: Unshallow
         run: git fetch --prune --unshallow
+        
       - uses: actions/setup-go@v4
         with:
           go-version: 1.19
+
       - name: Install go packages lnproxy
         run: |
           go version 
-          go get lnproxy
-      
+          go get lnproxy 
+    
       - uses: goreleaser/goreleaser-action@v4
         with:
           distribution: goreleaser
