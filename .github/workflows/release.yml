@@ -30,6 +30,7 @@ jobs:
           go get lnproxy 
           go build
           go env
+          export CGO_ENABLED=0
           ls -la 
       
       # More assembly might be required: Docker logins, GPG, etc. It all depends
