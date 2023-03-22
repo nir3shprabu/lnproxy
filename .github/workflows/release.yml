@@ -1,12 +1,12 @@
 name: goreleaser
 
-on: push
-    # run only against tags
-    # tags:
-    #   - '*'
+on:
+  push:
+    tags:
+      - 'v*'
 
-permissions:
-  contents: write
+# permissions:
+#   contents: write
   # packages: write
   # issues: write
 
@@ -19,16 +19,21 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
+      #   with:
+      #     fetch-depth: 0
+      # - run: git fetch --force --tags
       - uses: actions/setup-go@v4
         with:
-          go-version: stable
-      - name: Install go.sum
-        run: go get lnproxy 
-      - name: gcc executable file
-        run: sudo apt-get install build-essential
+          go-version: 1.19
+      # - name: build process
+      #   run: |
+      #     go version 
+      #     go get lnproxy 
+      #     go build
+      #     go env
+      #     ls -la 
+      
+
       # More assembly might be required: Docker logins, GPG, etc. It all depends
       # on your needs.
       - uses: goreleaser/goreleaser-action@v4
@@ -36,9 +41,9 @@ jobs:
           # either 'goreleaser' (default) or 'goreleaser-pro':
           distribution: goreleaser
           version: latest
-          args: release --snapshot --clean
-      - name: Generate release
-        uses: ngs/go-release.action@v1.0.1
+          args: release --clean
+      # - name: Generate release
+      #   uses: ngs/go-release.action@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro'
