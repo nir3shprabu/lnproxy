@@ -33,14 +33,14 @@ jobs:
       
       # More assembly might be required: Docker logins, GPG, etc. It all depends
       # on your needs.
-      - uses: goreleaser/goreleaser-action@v4
-        with:
-          # either 'goreleaser' (default) or 'goreleaser-pro':
-          distribution: goreleaser
-          version: latest
-          args: release --snapshot --clean
+      # - uses: goreleaser/goreleaser-action@v4
+      #   with:
+      #     # either 'goreleaser' (default) or 'goreleaser-pro':
+      #     distribution: goreleaser
+      #     version: latest
+      #     args: release --snapshot --clean
       - name: Generate release
-        uses: ngs/go-release.action@v1.0.1
+        uses: ngs/go-release.action@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro'
