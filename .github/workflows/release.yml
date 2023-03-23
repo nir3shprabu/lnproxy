@@ -27,16 +27,11 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: 1.19
-
-      - name: Install go packages lnproxy
-        run: |
-          go version 
-          go get lnproxy 
     
       - uses: goreleaser/goreleaser-action@v4
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
