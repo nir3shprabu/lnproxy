@@ -27,11 +27,6 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: 1.19
-
-      - name: Install go packages lnproxy
-        run: |
-          go version 
-          go get lnproxy 
     
       - uses: goreleaser/goreleaser-action@v4
         with:
